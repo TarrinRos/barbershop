@@ -30,9 +30,9 @@
   <div class="form-group">
     <label>Выберете Вашего мастера</label>
     <select name="barber_master" class="form-control" id="exampleFormControlSelect1">
-        <option>Эдик Руконожнисян</option>
-        <option>Федор Крюгеров</option>
-        <option>Максим Кричащий</option>
+        <option <%= @barber_master == 'Edik Rukinozhnisyan'? 'selected' : '' %>>Edik Rukinozhnisyan</option>
+        <option <%= @barber_master == 'Fedor Crugerov'? 'selected' : '' %>>Fedor Crugerov</option>
+        <option <%= @barber_master == 'Maxim Krikov'? 'selected' : '' %>>Maxim Krikov</option>
       </select>
     </div>
     <div class="form-group">
