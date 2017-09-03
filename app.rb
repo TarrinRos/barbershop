@@ -1,10 +1,24 @@
 # encoding: utf-8
 
+# required gems
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pony'
 require 'sqlite3'
+# creates database with initialisation
+configure do
+  @db = SQLite3::Database.new './public/barbershop.db'
+  @db.execute 'CREATE TABLE IF NOT EXISTS Users (
+    "id"         INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" TEXT,
+    "surname"    TEXT,
+    "phone"      TEXT,
+    "date_stamp" TEXT,
+    "barber"     TEXT,
+    "color"      TEXT
+)'
+end
 
 get '/' do
   erb 'Hello! <a href="https://github.com/bootstrap-ruby/sinatra-bootstrap">Original</a> pattern has been modified for <a href="http://rubyschool.us/">Ruby School</a>!!!'
