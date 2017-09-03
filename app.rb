@@ -6,10 +6,15 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'pony'
 require 'sqlite3'
-# creates database with initialisation
+
+# creates database with initialization
+def get_db
+  return SQLite3::Database.new './public/barbershop.db'
+end
+
 configure do
-  @db = SQLite3::Database.new './public/barbershop.db'
-  @db.execute 'CREATE TABLE IF NOT EXISTS Users (
+  db = get_db
+  db.execute 'CREATE TABLE IF NOT EXISTS "Users" (
     "id"         INTEGER PRIMARY KEY AUTOINCREMENT,
     "first_name" TEXT,
     "surname"    TEXT,
@@ -70,10 +75,9 @@ post '/visit' do
 
   @error = hh.select { |key, _value| params[key] == '' }.values.join(', ')
   return erb :visit if @error != ''
-  # Write to users.txt
-  f = File.open './public/users.txt', 'a'
-  f.puts "Имя: #{@first_name}, Фамилия: #{@surname}, Номер телефона #{@phone}, Время посещения: #{@date_time}, Мастер: #{@barber_master}, Цвет: #{@colorpicker}"
-  f.close
+  # saving to data_base
+  db = get_db
+  db.execute 'insert into "Users" (first_name, surname, phone, date_stamp, barber, color) values ( ?, ?, ?, ?, ?, ?)', [@first_name, @surname, @phone, @date_time, @barber_master, @colorpicker]
   erb :after_visit
 end
 
@@ -115,7 +119,6 @@ post '/admin_panel' do
   @password = params[:password]
 
   if @username == 'admin' && @password == 'narn'
-    @userstxt = SQLite3::Database.new './public/tar_first_db.sqlite'
     erb :admin_panel
   else
     @error = 'Вы ввели не правильное имя или пароль'
