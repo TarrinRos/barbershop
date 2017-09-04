@@ -123,6 +123,7 @@ post '/admin_panel' do
   @password = params[:password]
 
   if @username == 'admin' && @password == 'narn'
+    @log_name = @username
     @db = get_db
     @db.execute 'select * from Users' do |row|
       puts row
