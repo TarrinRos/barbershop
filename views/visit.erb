@@ -5,9 +5,10 @@
 <form action="/visit" method="POST" role="form">
   <!-- Правильное написание функции для JQuery -->
   <script type="text/javascript">
-  // этот код (для выбора цвета) исполняется после загрузки ВСЕЙ страницы
+  // этот код (для выбора цвета/даы и времени) исполняется после загрузки ВСЕЙ страницы
   $(function(){
     $('#color').simplecolorpicker();
+    $('#datetimepicker').datetimepicker();
   });
   </script>
 
@@ -15,18 +16,22 @@
     <label>Ваше имя</label>
     <input name="first_name" type="text" class="form-control" placeholder="Введите Ваше имя" value="<%= @first_name %>">
   </div>
+
   <div class="form-group">
     <label>Ваша Фамилия</label>
     <input name="surname" type="text" class="form-control" placeholder="Введите Вашу Фамилию" value="<%= @surname %>">
   </div>
+
   <div class="form-group">
     <label>Ваш номер телефона</label>
     <input name="phone" type="text" class="form-control" placeholder="Введите номер Вашего телефона" value="<%= @phone %>">
   </div>
+
   <div class="form-group">
     <label>Время Вашего посещения</label>
-    <input name="date_time" type="text" class="form-control" placeholder="В какое время Вам будет удобно?" value="<%= @date_time %>">
+    <input id="datetimepicker" name="date_time" type="text" class="form-control" placeholder="В какое время Вам будет удобно?" value="<%= @date_time %>">
   </div>
+
   <div class="form-group">
     <label>Выберете Вашего мастера</label>
     <select name="barber_master" class="form-control" id="exampleFormControlSelect1">
@@ -35,6 +40,7 @@
         <option <%= @barber_master == 'Maxim Krikov'? 'selected' : '' %>>Maxim Krikov</option>
       </select>
     </div>
+
     <div class="form-group">
       <label>Выберете цвет покраски</label>
       <select name="colorpicker" id="color">

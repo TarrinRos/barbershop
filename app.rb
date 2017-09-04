@@ -57,6 +57,10 @@ get '/logout' do
   erb :logout
 end
 
+get '/admin_panel' do
+  erb :login_form
+end
+
 post '/visit' do
   @first_name = params[:first_name]
   @surname = params[:surname]
@@ -119,6 +123,11 @@ post '/admin_panel' do
   @password = params[:password]
 
   if @username == 'admin' && @password == 'narn'
+    @db = get_db
+    @db.execute 'select * from Users' do |row|
+      puts row
+      puts '============'
+    end
     erb :admin_panel
   else
     @error = 'Вы ввели не правильное имя или пароль'
