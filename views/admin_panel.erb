@@ -3,5 +3,32 @@
   Мы преклоняемся пред Вами и выдаем список записанных на экзекуцию:
 </p>
 <form action='/admin_panel' method='GET' class="form-inline well">
-<%= @db %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date</th>
+        <th>Barber</th>
+        <th>Color</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>234</td>
+        <td>444154545456</td>
+        <td>#Fkjdfngv</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+<% @row.each_value do |line| %>
+<p><%= line %></p>
+<% end %>
 </form>

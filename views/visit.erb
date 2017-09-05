@@ -7,7 +7,7 @@
 // этот код (для выбора цвета/даы и времени) исполняется после загрузки ВСЕЙ страницы
 $(function(){
   $('#color').simplecolorpicker();
-  jQuery.datetimepicker.setLocale('en');
+  jQuery.datetimepicker.setLocale('ru');
   $('#datetimepicker').datetimepicker();
 });
 </script>
@@ -37,9 +37,7 @@ $(function(){
   <div class="form-group">
     <label>Выберете Вашего мастера</label>
     <select name="barber_master" class="form-control" id="exampleFormControlSelect1">
-        <option <%= @barber_master == 'Edik Rukinozhnisyan'? 'selected' : '' %>>Edik Rukinozhnisyan</option>
-        <option <%= @barber_master == 'Fedor Crugerov'? 'selected' : '' %>>Fedor Crugerov</option>
-        <option <%= @barber_master == 'Maxim Krikov'? 'selected' : '' %>>Maxim Krikov</option>
+        <option <%= @barber_master == 'Edik Rukinozhnisyan'? 'selected' : '' %>><% @barbers.execute 'select barber_name from Barbers' %></option>
       </select>
     </div>
 

@@ -9,7 +9,9 @@ require 'sqlite3'
 
 # creates database with initialization
 def get_db
-  return SQLite3::Database.new './public/barbershop.db'
+  db = SQLite3::Database.new './public/barbershop.db'
+  db.results_as_hash = true
+  return db
 end
 
 configure do
@@ -23,6 +25,14 @@ configure do
     "barber"     TEXT,
     "color"      TEXT
 )'
+  db.execute 'CREATE TABLE IF NOT EXISTS "Barbers" (
+    "id"            INTEGER PRIMARY KEY AUTOINCREMENT,
+    "barber_name"   TEXT UNIQUE
+  )'
+  db.execute 'INSERT OR IGNORE INTO "Barbers"(barber_name) VALUES (
+    "Edik Rukinozhnisyan"),
+    ("Fedor Crugerov"),
+    ("Maxim Krikov")'
 end
 
 get '/' do
@@ -34,6 +44,7 @@ get '/about' do
 end
 
 get '/visit' do
+  @barbers = get_db
   erb :visit
 end
 
@@ -70,6 +81,7 @@ post '/visit' do
   @colorpicker = params[:colorpicker]
   @after_visit = "Спасибо #{@username}, что Вы к нам записались"
 
+
   # Validating empty input
   # HASH (with a 'new 1.9 syntax')
   hh = { first_name: 'Введите имя',
@@ -82,6 +94,7 @@ post '/visit' do
   # saving to data_base
   db = get_db
   db.execute 'insert into "Users" (first_name, surname, phone, date_stamp, barber, color) values ( ?, ?, ?, ?, ?, ?)', [@first_name, @surname, @phone, @date_time, @barber_master, @colorpicker]
+
   erb :after_visit
 end
 
@@ -124,10 +137,9 @@ post '/admin_panel' do
 
   if @username == 'admin' && @password == 'narn'
     @log_name = @username
-    @db = get_db
-    @db.execute 'select * from Users' do |row|
-      puts row
-      puts '============'
+    db = get_db
+    db.execute 'select * from Users order by id desc' do |row|
+      @row = row
     end
     erb :admin_panel
   else
