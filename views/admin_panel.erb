@@ -5,8 +5,9 @@
 <form action='/admin_panel' method='GET' class="form-inline well">
  <%= @results %>
 
-  <table class="table">
-    <thead>
+  <table class="table table-bordered">
+
+    <thead class="thead-inverse">
       <tr>
         <th>#</th>
         <th>First Name</th>
@@ -17,18 +18,18 @@
         <th>Color</th>
       </tr>
     </thead>
-    <% @results.each do |row| %>
     <tbody>
+      <% @results.each do |x| %>
       <tr>
         <th scope="row">1</th>
-        <td><%= row['first_name'] %></td>
-        <td><%= row['surname'] %></td>
-        <td><%= row['phone'] %></td>
-        <td><%= row['date_stamp'] %></td>
-        <td><%= row['barber'] %></td>
-        <td><%= row['color'] %></td>
+        <td><%= x['first_name'] %></td>
+        <td><%= x['surname'] %></td>
+        <td><%= x['phone'] %></td>
+        <td><%= x['date_stamp'] %></td>
+        <td><%= x['barber'] %></td>
+        <td><%= x['color'] %></td>
       </tr>
+      <% end %>
     </tbody>
-    <% end %>
   </table>
 </form>

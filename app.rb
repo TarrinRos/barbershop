@@ -14,6 +14,18 @@ def get_db
   return db
 end
 
+def is_barber_exist? db, name
+  db.execute('select * from Barbers where barber_name=?', [name]).length > 0
+end
+
+def seed_db db, barbers
+  barbers.each do |barber|
+    if !is_barber_exist? db, barber
+      db.execute 'insert into Barbers (barber_name) values (?)', [barber]
+    end
+  end
+end
+
 configure do
   db = get_db
   db.execute 'CREATE TABLE IF NOT EXISTS "Users" (
@@ -27,12 +39,17 @@ configure do
 )'
   db.execute 'CREATE TABLE IF NOT EXISTS "Barbers" (
     "id"            INTEGER PRIMARY KEY AUTOINCREMENT,
-    "barber_name"   TEXT UNIQUE
+    "barber_name"   TEXT
   )'
-  db.execute 'INSERT OR IGNORE INTO "Barbers"(barber_name) VALUES (
-    "Edik Rukinozhnisyan"),
-    ("Fedor Crugerov"),
-    ("Maxim Krikov")'
+  # another way add unique data at the DB
+  # ========================================
+  # db.execute 'INSERT OR IGNORE INTO "Barbers"(barber_name) VALUES (
+  #   "Edik Rukinozhnisyan"),
+  #   ("Fedor Crugerov"),
+  #   ("Maxim Krikov")'
+  # ========================================
+
+  seed_db db, ['Edik Rukinozhnisyan', 'Fedor Crugerov', 'Maxim Krikov']
 end
 
 get '/' do
