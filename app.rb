@@ -100,7 +100,7 @@ post '/visit' do
   @date_time = params[:date_time]
   @barber_master = params[:barber_master]
   @colorpicker = params[:colorpicker]
-  @after_visit = "Спасибо #{@username}, что Вы к нам записались"
+  @after_visit = "Спасибо #{@first_name}, что Вы к нам записались"
 
 
   # Validating empty input
