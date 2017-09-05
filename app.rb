@@ -14,6 +14,11 @@ def get_db
   return db
 end
 
+before do
+  db = get_db
+  @barbers = db.execute 'select * from Barbers'
+end
+
 def is_barber_exist? db, name
   db.execute('select * from Barbers where barber_name=?', [name]).length > 0
 end
@@ -61,7 +66,6 @@ get '/about' do
 end
 
 get '/visit' do
-  @barbers = get_db
   erb :visit
 end
 
@@ -153,7 +157,6 @@ post '/admin_panel' do
   @password = params[:password]
 
   if @username == 'admin' && @password == 'narn'
-    @log_name = @username
     db = get_db
     @results = db.execute 'select * from Users order by id desc'
     erb :admin_panel
