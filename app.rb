@@ -138,9 +138,7 @@ post '/admin_panel' do
   if @username == 'admin' && @password == 'narn'
     @log_name = @username
     db = get_db
-    db.execute 'select * from Users order by id desc' do |row|
-      @row = row
-    end
+    @results = db.execute 'select * from Users order by id desc'
     erb :admin_panel
   else
     @error = 'Вы ввели не правильное имя или пароль'

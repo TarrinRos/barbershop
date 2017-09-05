@@ -3,6 +3,7 @@
   Мы преклоняемся пред Вами и выдаем список записанных на экзекуцию:
 </p>
 <form action='/admin_panel' method='GET' class="form-inline well">
+ <%= @results %>
 
   <table class="table">
     <thead>
@@ -10,25 +11,24 @@
         <th>#</th>
         <th>First Name</th>
         <th>Last Name</th>
+        <th>Phone</th>
         <th>Date</th>
         <th>Barber</th>
         <th>Color</th>
       </tr>
     </thead>
+    <% @results.each do |row| %>
     <tbody>
       <tr>
         <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>234</td>
-        <td>444154545456</td>
-        <td>#Fkjdfngv</td>
+        <td><%= row['first_name'] %></td>
+        <td><%= row['surname'] %></td>
+        <td><%= row['phone'] %></td>
+        <td><%= row['date_stamp'] %></td>
+        <td><%= row['barber'] %></td>
+        <td><%= row['color'] %></td>
       </tr>
-
     </tbody>
+    <% end %>
   </table>
-
-<% @row.each_value do |line| %>
-<p><%= line %></p>
-<% end %>
 </form>
