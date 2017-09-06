@@ -153,8 +153,8 @@ post '/contacts' do
 end
 
 post '/admin_panel' do
-  @username = params[:username]
   @password = params[:password]
+  @username = params[:username]
 
   if @username == 'admin' && @password == 'narn'
     db = get_db
